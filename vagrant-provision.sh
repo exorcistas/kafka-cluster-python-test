@@ -3,8 +3,9 @@
 # update and install base components
 sudo apt update -y
 sudo apt install -y software-properties-common
-sudo apt-get install -y python3 python3-dev python3-pip python3-venv libxml2-dev libxslt1-dev zlib1g-dev libffi-dev libssl-dev
+sudo apt-get install -y python3.10 python3-dev python3-pip python3-venv
 python3 -m pip install --upgrade pip
+python3 --version
 
 # install and setup docker
 sudo apt install docker docker-compose -y
