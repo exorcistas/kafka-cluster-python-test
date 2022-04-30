@@ -3,7 +3,7 @@
 
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
 Vagrant.configure("2") do |config|
-  config.vm.box = "generic/ubuntu1804"
+  config.vm.box = "generic/ubuntu2010"
   config.vm.box_check_update = true
   config.vm.hostname = "kafka-dev"
 

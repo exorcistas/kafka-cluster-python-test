@@ -14,11 +14,9 @@ sudo usermod -aG docker $USER
 sudo chown $USER /var/run/docker.sock
 sudo systemctl start docker
 docker --version
-docker-compose up -d
 
-# prepare python environment
+# prepare environment
+chown $USER /vagrant_data
 cd /vagrant_data
-python3 -m venv venv
-source ./venv/bin/activate
-python3 -m pip install --upgrade pip
-#sudo pip install -r requirements.txt
+docker-compose up -d
+pip3 install -r requirements.txt
