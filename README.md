@@ -14,9 +14,15 @@ vagrant rsync-auto
 
 vagrant ssh
 cd /vagrant_data
+pip3 install -r requirements.txt
 
 vagrant rsync-back
 ```
 
+### Run tests
+1. ```python3 consumer.py```
+2. ```python3 producer.py```
+
 ### Example docs
 * https://github.com/staeff/kafka-python-example
+* https://www.tutorialsbuddy.com/kafka-python-producer-example

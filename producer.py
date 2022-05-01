@@ -1,21 +1,41 @@
-from json import dumps
 from kafka import KafkaProducer
+#from json import dumps
+import json
 from loguru import logger
 
-def serializer(message):
-    return json.dumps(message).encode('utf-8')
+
+class MessageProducer:
+    broker = ""
+    topic = ""
+    producer = None
+
+    def __init__(self, broker, topic):
+        self.broker = broker
+        self.topic = topic
+        self.producer = KafkaProducer(bootstrap_servers=self.broker,
+                        value_serializer = lambda v: json.dumps(v).encode('utf-8'),
+                        acks='all',
+                        retries = 3)
+        logger.info(f'KafkaProducer initialized under topic name: {topic}')
+
+    def send_msg(self, msg):
+        logger.info(f'Sending {msg}')
+        try:
+            future = self.producer.send(self.topic, msg)
+            self.producer.flush()
+            future.get(timeout=60)
+            logger.info('Message sent successfully!')
+            return {'status_code':200, 'error':None}
+
+        except Exception as ex:
+            logger.exception(f'Error: {ex}')
+            return ex
+
 
 if __name__ == '__main__':
-    # initializing the Kafka producer
-    producer = KafkaProducer(
-        bootstrap_servers = ['localhost:9092'],
-        value_serializer = serializer
-    )
+    broker = 'localhost:9092'
+    topic = 'sample'
+    producer = MessageProducer(broker, topic)
 
-    url = 'https://www.internetwache-polizei-berlin.de/vdb/Fahrraddiebstahl.csv'
-    with open('testdata.csv',encoding='utf-8') as infile:
-        data = infile.readlines()
-    logger.info('Sending data to kafka under topic name `biketheft`')
-    for d in data:
-        producer.send('biketheft', d)
-        logger.info(f'Sending {d}')
+    data = {'name':'abc', 'email':'abc@example.com'}
+    resp = producer.send_msg(data)
