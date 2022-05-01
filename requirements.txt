@@ -1,2 +1,2 @@
-kafka-python==2.0.2
-loguru==0.6.0
+kafka
+loguru
