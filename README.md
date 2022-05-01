@@ -1,4 +1,4 @@
-# Kafka/Python test on Docker inside Vagrant box
+# Kafka/Python test inside Vagrant box
 
 
 ### Prerequisites for Vagrant/Libvirt
